@@ -5,9 +5,9 @@ Here’s a breakdown of the **Job Board API** project:
 ### **Project: Job Board API**
 
 #### **Tech Stack:**
-- **Backend Framework**: NestJS (with Express) with TS
+- **Backend Framework**: Node.js (with Express) with TS
 - **Database**: MongoDB (local and or MongoDB Atlas)
-- **ORM**: Prisma
+- **ORM**: Mongoose
 - **File Storage**: Cloudinary (for resumes and profile pictures)
 - **API Documentation**: Swagger
 
