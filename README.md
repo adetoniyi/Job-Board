@@ -74,6 +74,6 @@ Here’s a breakdown of the **Job Board API** project:
 - Source code repository (GitHub) with clear instructions for setup and testing. Also, include the link to your hosted swagger/api docs in readme of this project.
 - Host on Render or any hosting provider.
 - Take note of key details such as project structure, making sure it adheres to Softcode's standard
-- Submission deadline (Friday 23rd of May 2025, 12 PM WAT). Good lucj
+- Submission deadline (Friday 23rd of May 2025, 12 PM WAT). Good luck
 
 This project will help interns demonstrate their ability to work with a full-fledged API using modern technologies while managing real-world functionalities. Would you like to proceed with setting up more detailed specs or guidelines?
