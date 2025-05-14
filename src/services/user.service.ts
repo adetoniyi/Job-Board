@@ -1,12 +1,23 @@
-import User, { IUser } from '../models/user.model';
+import User from '../models/user.model';
 
-export const getUserProfile = async (userId: string): Promise<IUser | null> => {
-  return await User.findById(userId).select('-password');
+export const createUser = async (userData: any) => {
+  const user = await User.create(userData);
+  return user;
 };
 
-export const updateUserProfile = async (
-  userId: string,
-  updateData: Partial<IUser>
-): Promise<IUser | null> => {
-  return await User.findByIdAndUpdate(userId, updateData, { new: true });
+export const getUserById = async (userId: string) => {
+  const user = await User.findById(userId);
+  if (!user) throw new Error('User not found');
+  return user;
+};
+
+export const updateUser = async (userId: string, userData: any) => {
+  const user = await User.findByIdAndUpdate(userId, userData, { new: true });
+  if (!user) throw new Error('User not found');
+  return user;
+};
+
+export const getUsers = async () => {
+  const users = await User.find();
+  return users;
 };

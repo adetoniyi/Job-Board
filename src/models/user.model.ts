@@ -1,4 +1,4 @@
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IUser extends Document {
   name: string;
@@ -10,18 +10,25 @@ export interface IUser extends Document {
   profilePicUrl?: string;
   experience?: string;
   skills?: string[];
+  professionalSummary?: string;
+  education?: string[];
 }
 
-const userSchema = new mongoose.Schema<IUser>({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  phone: { type: String, required: true },
-  role: { type: String, enum: ['admin', 'user'], default: 'user' },
-  resumeUrl: { type: String },
-  profilePicUrl: { type: String },
-  experience: { type: String },
-  skills: [{ type: String }],
-}, { timestamps: true });
+const userSchema = new Schema<IUser>(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    phone: { type: String, required: false },
+    role: { type: String, enum: ['admin', 'user'], default: 'user' },
+    resumeUrl: { type: String },
+    profilePicUrl: { type: String },
+    experience: { type: String },
+    skills: [{ type: String }],
+    professionalSummary: { type: String },
+    education: [{ type: String }],
+  },
+  { timestamps: true }
+);
 
 export default mongoose.model<IUser>('User', userSchema);

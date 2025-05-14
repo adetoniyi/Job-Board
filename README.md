@@ -59,7 +59,7 @@ Here’s a breakdown of the **Job Board API** project:
 7. **API Documentation:**
    - Use **Swagger** for full API documentation, including endpoints, request/response bodies, and authentication details.
 
-8. **Database Schema (using Prisma):**
+8. **Database Schema (using Mongoose):**
    - **User** model related to job applications.
    - **Job Listing** model with fields for job details.
    - **Application** model linking users to jobs.

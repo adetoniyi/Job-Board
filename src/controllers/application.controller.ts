@@ -1,5 +1,18 @@
 import { Request, Response } from 'express';
+import '../types/express'; // Import the extended type definition for Request
 import * as applicationService from '../services/application.service';
+
+import 'express';
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: {
+        id: string;
+      };
+    }
+  }
+}
 
 export const applyForJob = async (req: Request, res: Response) => {
   try {
@@ -14,7 +27,7 @@ export const applyForJob = async (req: Request, res: Response) => {
     const application = await applicationService.applyForJob(userId, jobId, resumeUrl);
     res.status(201).json(application);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: (error instanceof Error) ? error.message : 'An unknown error occurred' });
   }
 };
 
@@ -24,6 +37,6 @@ export const getApplicationsForJob = async (req: Request, res: Response) => {
     const applications = await applicationService.getApplicationsForJob(jobId);
     res.status(200).json(applications);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: (error instanceof Error) ? error.message : 'An unknown error occurred' });
   }
 };

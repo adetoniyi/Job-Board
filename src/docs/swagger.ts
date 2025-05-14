@@ -1,4 +1,7 @@
 import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import { Express } from 'express';
+
 
 const options = {
   definition: {
@@ -8,7 +11,11 @@ const options = {
       version: '1.0.0',
       description: 'API documentation for Job Board platform',
     },
-    servers: [{ url: 'http://localhost:5000' }],
+    servers: [
+      { 
+        url: 'http://localhost:5000' 
+      }
+    ],
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -18,9 +25,17 @@ const options = {
         },
       },
     },
-    security: [{ bearerAuth: [] }],
+    security: [
+      { 
+        bearerAuth: [] 
+      }
+    ],
   },
-  apis: ['./src/routes/*.ts'],
+  apis: ['./routes/*.ts', './controllers/*.ts', './models/*.ts'],
 };
 
-export default swaggerJsDoc(options);
+const swaggerSpec = swaggerJsDoc(options);
+
+export const setupSwagger = (app: Express) => {
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+};

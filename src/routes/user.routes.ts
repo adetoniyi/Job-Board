@@ -1,12 +1,21 @@
 import express from 'express';
-import { getProfile, updateProfile as updateUserProfile } from '../controllers/user.controller';
+import { getProfile } from '../controllers/user.controller';
 import User from '../models/user.model';
-import { protect } from '../middlewares/auth.middleware';
 import { upload } from '../utils/upload';
+import { updateProfile as updateUserProfile } from '../controllers/user.controller';
 
 const router = express.Router();
 
-import { RequestHandler } from 'express';
+import { RequestHandler, Request, Response, NextFunction } from 'express';
+
+export const localProtect = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  if (!req.headers.authorization) {
+    res.status(401).json({ message: 'Unauthorized' });
+    return;
+  }
+  // Additional logic
+  next();
+};
 
 export const getUserProfile: RequestHandler = async (req, res, next) => {
   try {
@@ -25,17 +34,31 @@ export const getUserProfile: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const updateProfile: RequestHandler = async (req, res, next) => {
-  try {
-    // Your existing logic
-    res.status(200).json({ message: 'Profile updated successfully' });
-    return; // Ensure no Response object is returned
-  } catch (error) {
-    next(error);
-  }
-};
+  async (req: Request, res: Response): Promise<void> => {
+  // Your existing logic
+  res.status(200).json({ message: 'Profile updated successfully' });
+}
 
 router.get('/me', getUserProfile);
-router.put('/me', upload.fields([{ name: 'resume' }, { name: 'profilePic' }]), updateUserProfile);
+// Upload profilePicture and resume
+export const updateProfile = async (req: Request, res: Response): Promise<void> => {
+  // Your existing logic
+  res.status(200).json({ message: 'Profile updated successfully' });
+};
+
+router.put('/me', upload.fields([{ name: 'resume' }, { name: 'profilePic' }]), updateProfile);
+
+router.put(
+  '/profile',
+  localProtect,
+  upload.fields([
+    { name: 'profilePicture', maxCount: 1 },
+    { name: 'resume', maxCount: 1 },
+  ]),
+  updateProfile
+);
+
+
+// Route to get user profile
 
 export default router;

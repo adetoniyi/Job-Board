@@ -1,3 +1,4 @@
+
 import express, { Request, Response, NextFunction } from 'express';
 import {
   createJob,
@@ -6,8 +7,6 @@ import {
   // deleteJobController, // Removed as it's not exported from the controller
 } from '../controllers/job.controller';
 // Removed duplicate import of 'protect'
-import { isAdmin } from '../middlewares/role.middleware';
-import { protect } from '../middlewares/auth.middleware';
 const router = express.Router();
 
 router.get('/', getJobs);
@@ -60,3 +59,63 @@ router.put('/:id', updateJob);
 router.post('/', createJobHandler);
 
 export default router;
+
+
+/**
+ * @swagger
+ * tags:
+ *   name: Jobs
+ *   description: Job Listings
+ */
+
+/**
+ * @swagger
+ * /api/jobs:
+ *   post:
+ *     summary: Create a new job
+ *     tags: [Jobs]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - companyName
+ *               - description
+ *             properties:
+ *               title:
+ *                 type: string
+ *               companyName:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               location:
+ *                 type: string
+ *               jobType:
+ *                 type: string
+ *               salary:
+ *                 type: string
+ *               applicationDeadline:
+ *                 type: string
+ *                 format: date
+ *     responses:
+ *       201:
+ *         description: Job created successfully
+ *       400:
+ *         description: Bad request
+ */
+
+/**
+ * @swagger
+ * /api/jobs:
+ *   get:
+ *     summary: Get all job listings
+ *     tags: [Jobs]
+ *     responses:
+ *       200:
+ *         description: List of jobs
+ */
